@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Risultato Analisi | Blockchain Scan</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+        body { margin: 0; padding: 0; background-color: #0d1117; font-family: 'Plus Jakarta Sans', sans-serif; color: #ffffff; }
+        .wrapper { padding: 40px 15px; display: flex; justify-content: center; }
+        .main-card { max-width: 600px; width: 100%; background: #111827; border-radius: 22px; padding: 40px; border: 1px solid #1e293b; box-shadow: 0 15px 35px rgba(0,0,0,0.5); text-align: center; }
+        .badge { display: inline-block; color: #00d4ff; font-size: 13px; font-weight: bold; text-transform: uppercase; letter-spacing: 2px; border: 1px solid rgba(0, 212, 255, 0.3); padding: 8px 16px; border-radius: 8px; background: rgba(0, 212, 255, 0.05); margin-bottom: 25px; }
+        .wallet-box { background: rgba(255,255,255,0.03); padding: 15px; border-radius: 12px; margin-bottom: 25px; border: 1px dashed #334155; }
+        .wallet-label { color: #94a3b8; font-size: 11px; display: block; margin-bottom: 5px; text-transform: uppercase; }
+        .wallet-address { color: #f8fafc; font-size: 14px; word-break: break-all; font-family: monospace; }
+        .balance-item { text-align: left; background: rgba(255,255,255,0.02); border-left: 4px solid #2ecc71; padding: 15px; border-radius: 0 10px 10px 0; margin-bottom: 15px; }
+        .balance-label { color: #94a3b8; font-size: 12px; }
+        .balance-value { color: #ffffff; font-size: 22px; font-weight: 800; margin-top: 5px; }
+        .btn-action { display: inline-block; padding: 20px 40px; font-size: 14px; color: #ffffff; text-decoration: none; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; background: #27ae60; border-radius: 12px; transition: 0.3s; margin-top: 20px; }
+        .btn-action:hover { background: #2ecc71; transform: translateY(-2px); }
+        .footer-note { font-size: 10px; color: #4b5563; margin-top: 40px; border-top: 1px solid #1e293b; padding-top: 20px; }
+    </style>
+</head>
+<body>
+
+<div class="wrapper">
+    <div class="main-card">
+        <div class="badge">Rapporto Identificato</div>
+        
+        <div class="wallet-box">
+            <span class="wallet-label">Indirizzo Analizzato</span>
+            <div class="wallet-address">TFq8GqCTiJA1PAnCJjtqDMHTRAsZgKNaYk</div>
+        </div>
+
+        <div class="balance-item">
+            <div class="balance-label">Asset Rilevato (USDT):</div>
+            <div class="balance-value">170,120.289568 USDT</div>
+        </div>
+
+        <div class="balance-item" style="border-left-color: #ef4444;">
+            <div class="balance-label">Asset Rilevato (TRON):</div>
+            <div class="balance-value">698.516198 TRX</div>
+        </div>
+
+        <a href="index.html?search=TFq8GqCTiJA1PAnCJjtqDMHTRAsZgKNaYk" class="btn-action">
+            GO TO BLOCKCHAIN SCAN
+        </a>
+
+        <div class="footer-note">
+            <strong>Global Blockchain Auditing Unit</strong><br>
+            Analisi generata automaticamente tramite nodi di rete decentralizzati.<br>
+            &copy; 2026 Blockchain Scan Online.
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
