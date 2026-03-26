@@ -19,9 +19,61 @@
         
         body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg-dark); color: var(--text-dark); line-height: 1.6; }
         
-        header { background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); padding: 20px 40px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 100; }
-        header .logo { font-size: 20px; font-weight: 800; background: linear-gradient(135deg, #22c55e, #3b82f6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; display: flex; align-items: center; gap: 10px; text-transform: uppercase; }
-        
+        /* Stili i Logos së Re */
+        header { 
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); 
+            padding: 15px 40px; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            border-bottom: 1px solid var(--border); 
+            position: sticky; 
+            top: 0; 
+            z-index: 100; 
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-size: 20px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            color: #fff;
+            text-transform: uppercase;
+        }
+
+        .logo-icon {
+            position: relative;
+            width: 42px;
+            height: 42px;
+            background: rgba(34, 197, 94, 0.1);
+            border: 1px solid var(--primary);
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: var(--primary);
+            font-size: 22px;
+            overflow: hidden;
+        }
+
+        .scan-line {
+            position: absolute;
+            width: 100%;
+            height: 2px;
+            background: var(--primary);
+            top: 0;
+            left: 0;
+            box-shadow: 0 0 10px var(--primary);
+            animation: scan 2s linear infinite;
+        }
+
+        @keyframes scan {
+            0% { top: 0; }
+            100% { top: 100%; }
+        }
+
         nav { background: #020617; padding: 15px 40px; display: flex; gap: 25px; border-bottom: 1px solid var(--border); overflow-x: auto; }
         nav span { font-size: 12px; font-weight: 700; cursor: pointer; color: #94a3b8; text-transform: uppercase; transition: 0.3s; white-space: nowrap; }
         nav span:hover { color: var(--primary); }
@@ -58,7 +110,13 @@
 <body>
 
     <header>
-        <div class="logo"><i class="fas fa-shield-check"></i> BLOCKCHAIN SCAN ONLINE</div>
+        <div class="logo">
+            <div class="logo-icon">
+                <i class="fas fa-fingerprint"></i>
+                <div class="scan-line"></div>
+            </div>
+            <span>BLOCKCHAIN <span style="color: var(--primary);">SCAN</span></span>
+        </div>
     </header>
 
     <nav>
@@ -127,19 +185,23 @@
 
             if (!val) { msg.innerText = "In attesa di un indirizzo..."; return; }
 
+            // Bitcoin Check
             if (val.match(/^(bc1|[13])[a-zA-HJ-NP-Z0-9]{25,39}$/)) {
                 document.getElementById('net-btc').classList.add('active');
                 msg.innerHTML = "Identificato: <b style='color:#f59e0b'>Network BITCOIN</b>";
             } 
+            // Ethereum/BNB Check
             else if (val.startsWith('0x') && val.length === 42) {
                 document.getElementById('net-eth').classList.add('active');
                 document.getElementById('net-bnb').classList.add('active');
                 msg.innerHTML = "Identificato: <b style='color:#3b82f6'>Network ETHEREUM / EVM</b>";
             }
+            // Tron Check
             else if (val.startsWith('T') && val.length === 34) {
                 document.getElementById('net-trx').classList.add('active');
                 msg.innerHTML = "Identificato: <b style='color:#ef4444'>Network TRON (TRC20)</b>";
             }
+            // Solana Check
             else if (val.length >= 32 && val.length <= 44 && !val.startsWith('0x')) {
                 document.getElementById('net-sol').classList.add('active');
                 msg.innerHTML = "Identificato: <b style='color:#a855f7'>Network SOLANA</b>";
