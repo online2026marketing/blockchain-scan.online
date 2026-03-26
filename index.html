@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blockchain Scan Online | Analisi Forense Ufficiale</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --primary: #22c55e;
+            --secondary: #3b82f6;
+            --bg-dark: #0f172a;
+            --card-dark: #020617;
+            --text-dark: #e2e8f0;
+            --border: #1e293b;
+        }
+        
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg-dark); color: var(--text-dark); line-height: 1.6; }
+        
+        header { background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); padding: 20px 40px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 100; }
+        header .logo { font-size: 20px; font-weight: 800; background: linear-gradient(135deg, #22c55e, #3b82f6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; display: flex; align-items: center; gap: 10px; text-transform: uppercase; }
+        
+        nav { background: #020617; padding: 15px 40px; display: flex; gap: 25px; border-bottom: 1px solid var(--border); overflow-x: auto; }
+        nav span { font-size: 12px; font-weight: 700; cursor: pointer; color: #94a3b8; text-transform: uppercase; transition: 0.3s; white-space: nowrap; }
+        nav span:hover { color: var(--primary); }
+
+        .container { max-width: 1000px; margin: 0 auto; padding: 40px 20px; }
+        .card { background: var(--card-dark); padding: 35px; border-radius: 20px; border: 1px solid var(--border); margin-bottom: 30px; box-shadow: 0 20px 50px rgba(0,0,0,0.6); }
+        
+        h2 { margin-bottom: 10px; font-size: 24px; color: #fff; font-weight: 700; }
+        p.subtitle { color: #94a3b8; margin-bottom: 30px; font-size: 15px; }
+        
+        input { width: 100%; padding: 20px; border-radius: 12px; border: 1px solid var(--border); background: #0f172a; color: white; font-size: 16px; outline: none; transition: 0.4s; margin-bottom: 10px; }
+        input:focus { border-color: var(--primary); box-shadow: 0 0 20px rgba(34, 197, 94, 0.15); }
+        
+        button.btn-scan { background: linear-gradient(135deg, #22c55e, #16a34a); color: white; border: none; padding: 18px; border-radius: 12px; font-weight: 800; cursor: pointer; width: 100%; transition: 0.3s; text-transform: uppercase; letter-spacing: 1.5px; }
+        button.btn-scan:hover { transform: translateY(-3px); box-shadow: 0 10px 25px rgba(34, 197, 94, 0.4); }
+
+        .network-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 12px; margin-top: 30px; }
+        .net-item { background: #111827; padding: 12px; border-radius: 10px; text-align: center; font-size: 11px; font-weight: 700; color: #64748b; border: 1px solid var(--border); }
+        .net-item.active { border-color: var(--primary); color: #fff; background: rgba(34, 197, 94, 0.15); }
+
+        #detectionMsg { margin-top: 20px; text-align: center; font-weight: 600; font-size: 14px; color: var(--secondary); min-height: 24px; }
+        
+        footer { margin-top: 50px; padding: 40px 20px; border-top: 1px solid var(--border); text-align: center; color: #64748b; font-size: 13px; }
+        .footer-links { margin-bottom: 20px; }
+        .footer-links a { color: #94a3b8; text-decoration: none; margin: 0 15px; transition: 0.3s; }
+        .footer-links a:hover { color: var(--primary); }
+        .support-email { color: var(--primary); font-weight: 700; display: block; margin-top: 10px; text-decoration: none; }
+
+        .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); overflow-y: auto; }
+        .modal-content { background: var(--card-dark); margin: 5% auto; padding: 30px; border: 1px solid var(--border); border-radius: 20px; width: 80%; max-width: 700px; color: #94a3b8; font-size: 14px; }
+        .close-modal { float: right; cursor: pointer; color: #fff; font-size: 24px; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo"><i class="fas fa-shield-check"></i> BLOCKCHAIN SCAN ONLINE</div>
+    </header>
+
+    <nav>
+        <span onclick="location.reload()"><i class="fas fa-search"></i> Explorer</span>
+        <span onclick="showTerms()"><i class="fas fa-file-contract"></i> Termini & Condizioni</span>
+    </nav>
+
+    <div class="container">
+        <section>
+            <div class="card">
+                <h2>Scanner Forense Multi-Chain</h2>
+                <p class="subtitle">Analisi ufficiale in tempo reale degli indirizzi wallet su scala globale.</p>
+                
+                <input type="text" id="walletInput" placeholder="Inserisci indirizzo (Bitcoin, Ethereum, Tron...)" oninput="handleDetection()">
+                <button class="btn-scan" onclick="goToExplorer()">AVVIA SCANSIONE UFFICIALE</button>
+
+                <div id="detectionMsg">In attesa di un indirizzo...</div>
+
+                <div class="network-grid">
+                    <div class="net-item" id="net-btc">BITCOIN (BTC)</div>
+                    <div class="net-item" id="net-eth">ETHEREUM (ETH)</div>
+                    <div class="net-item" id="net-trx">TRON (TRX)</div>
+                    <div class="net-item" id="net-sol">SOLANA (SOL)</div>
+                    <div class="net-item" id="net-bnb">BNB CHAIN</div>
+                    <div class="net-item" id="net-matic">POLYGON</div>
+                    <div class="net-item" id="net-xrp">XRP RIPPLE</div>
+                    <div class="net-item" id="net-ada">CARDANO</div>
+                    <div class="net-item" id="net-dot">POLKADOT</div>
+                    <div class="net-item" id="net-doge">DOGECOIN</div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <div id="termsModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="hideTerms()">&times;</span>
+            <h2 style="color:#fff">Termini e Condizioni di Servizio</h2><br>
+            <p>1. <b>Natura del Servizio:</b> Blockchain Scan Online fornisce uno strumento di consultazione dati on-chain pubblico. Non siamo responsabili per l'uso dei dati forniti.</p><br>
+            <p>2. <b>Privacy:</b> Non memorizziamo gli indirizzi cercati dagli utenti a meno che non venga richiesto un report forense specifico.</p><br>
+            <p>3. <b>Limitazione di Responsabilità:</b> Il servizio collega l'utente a nodi e explorer esterni. L'accuratezza dei dati dipende dai rispettivi network decentralizzati.</p><br>
+            <p>4. <b>Contatti:</b> Per supporto tecnico, contattare esclusivamente l'indirizzo ufficiale riportato nel sito.</p>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-links">
+            <a href="#" onclick="showTerms()">Termini di Servizio</a>
+            <a href="#" onclick="showTerms()">Privacy Policy</a>
+        </div>
+        <p>&copy; 2026 Blockchain Scan Online - Global Network Security Hub</p>
+        <p>Supporto Tecnico H24:</p>
+        <a href="mailto:support@blockchain-scan.online" class="support-email">support@blockchain-scan.online</a>
+    </footer>
+
+    <script>
+        function showTerms() { document.getElementById('termsModal').style.display = 'block'; }
+        function hideTerms() { document.getElementById('termsModal').style.display = 'none'; }
+
+        function handleDetection() {
+            const val = document.getElementById('walletInput').value.trim();
+            const msg = document.getElementById('detectionMsg');
+            const items = document.querySelectorAll('.net-item');
+            
+            items.forEach(i => i.classList.remove('active'));
+
+            if (!val) { msg.innerText = "In attesa di un indirizzo..."; return; }
+
+            if (val.match(/^(bc1|[13])[a-zA-HJ-NP-Z0-9]{25,39}$/)) {
+                document.getElementById('net-btc').classList.add('active');
+                msg.innerHTML = "Identificato: <b style='color:#f59e0b'>Network BITCOIN</b>";
+            } 
+            else if (val.startsWith('0x') && val.length === 42) {
+                document.getElementById('net-eth').classList.add('active');
+                document.getElementById('net-bnb').classList.add('active');
+                msg.innerHTML = "Identificato: <b style='color:#3b82f6'>Network ETHEREUM / EVM</b>";
+            }
+            else if (val.startsWith('T') && val.length === 34) {
+                document.getElementById('net-trx').classList.add('active');
+                msg.innerHTML = "Identificato: <b style='color:#ef4444'>Network TRON (TRC20)</b>";
+            }
+            else if (val.length >= 32 && val.length <= 44 && !val.startsWith('0x')) {
+                document.getElementById('net-sol').classList.add('active');
+                msg.innerHTML = "Identificato: <b style='color:#a855f7'>Network SOLANA</b>";
+            }
+        }
+
+        function goToExplorer() {
+            const addr = document.getElementById('walletInput').value.trim();
+            if (!addr) return alert("Inserisci un indirizzo.");
+
+            let url = "";
+            if (addr.startsWith('0x')) url = "https://etherscan.io/address/" + addr;
+            else if (addr.startsWith('T')) url = "https://tronscan.org/#/address/" + addr;
+            else if (addr.startsWith('bc1') || addr.startsWith('1') || addr.startsWith('3')) url = "https://www.blockchain.com/explorer/addresses/btc/" + addr;
+            else url = "https://solscan.io/account/" + addr;
+
+            window.open(url, '_blank');
+        }
+    </script>
+</body>
+</html>
