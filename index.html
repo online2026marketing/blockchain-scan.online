@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Blockchain Scan Online | Official Forensic Portal</title>
+    <link rel="icon" type="image/png" href="favicon.png">
+    
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=JetBrains+Mono&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -13,42 +15,13 @@
         
         #blockchain-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; background: radial-gradient(circle at center, #ffffff 0%, #e2e8f0 100%); }
         
+        /* TOP NAV - WHITE BACKGROUND */
         .top-nav { position: relative; z-index: 100; background: #ffffff; padding: 12px 40px; display: flex; justify-content: space-between; align-items: center; color: #003366; border-bottom: 2px solid var(--gold); box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
         .logo { display: flex; align-items: center; gap: 10px; font-weight: 800; font-size: 20px; color: #003366; text-decoration: none; text-transform: uppercase; }        
         .nav-right { display: flex; align-items: center; gap: 20px; }
         .nav-links { display: flex; gap: 25px; }
         .nav-links a { color: #64748b; text-decoration: none; font-size: 11px; font-weight: 600; text-transform: uppercase; cursor: pointer; transition: 0.3s; }
         .nav-links a:hover { color: #003366; }
-
-        /* --- MINIMALIST TRANSLATE BUTTON FIXED --- */
-        #google_translate_element { display: inline-block; vertical-align: middle; margin-left: 15px; }
-        .goog-te-gadget-icon, .goog-te-gadget-simple img, .goog-te-menu-value span:nth-child(3), 
-        .goog-te-menu-value span:nth-child(5), .goog-te-gadget span { display: none !important; }
-        .goog-te-gadget-simple { 
-            background-color: transparent !important; 
-            border: 1px solid rgba(201, 164, 76, 0.4) !important; 
-            padding: 4px 10px !important; 
-            border-radius: 4px !important; 
-            cursor: pointer !important; 
-            display: flex !important; 
-            align-items: center !important; 
-            text-decoration: none !important; 
-        }
-        .goog-te-menu-value span:first-child { 
-            color: #64748b !important; /* Fixed color to match nav */
-            font-size: 11px !important; 
-            font-weight: 700 !important; 
-            text-transform: uppercase !important;
-            margin-right: 4px !important; /* Space for the arrow */
-        }
-        .goog-te-menu-value:after { 
-            content: '▾'; 
-            color: var(--gold); 
-            font-size: 12px; 
-            font-weight: bold; 
-        }
-        .goog-te-banner-frame.skiptranslate { display: none !important; }
-        body { top: 0px !important; }
 
         .main-wrapper { position: relative; z-index: 10; max-width: 1400px; margin: 30px auto; padding: 0 20px; display: grid; grid-template-columns: 1fr 1fr; gap: 25px; align-items: stretch; }
         .card-left, .card-right { background: rgba(255, 255, 255, 0.98); border-radius: 12px; padding: 30px; border: 1px solid #e2e8f0; box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1); display: flex; flex-direction: column; justify-content: space-between; }
@@ -71,7 +44,7 @@
         .form-group input, .form-group textarea { width: 100%; padding: 10px; border: 1.5px solid var(--border); border-radius: 8px; font-size: 14px; }
         .submit-btn { width: 100%; padding: 16px; background: var(--gold); color: white; border: none; border-radius: 8px; font-weight: 800; cursor: pointer; text-transform: uppercase; }
         
-        /* Fixed Support Box Color */
+        /* SUPPORT BOX - ACCENT COLOR */
         .support-box { background: var(--accent); color: white; padding: 15px; border-radius: 12px; text-align: center; border-bottom: 4px solid var(--gold); margin-top: 15px; }
         
         .compliance-section { background: #f8fafc; padding: 40px 20px; border-top: 1px solid var(--border); margin-top: 50px; position: relative; z-index: 10; }
@@ -90,14 +63,13 @@
             <a onclick="location.reload()"><i class="fas fa-magnifying-glass"></i> Explorer</a>
             <a href="#report"><i class="fas fa-file-contract"></i> Report Scam</a>
         </div>
-        <div id="google_translate_element"></div>
     </div>
 </nav>
 
 <div class="main-wrapper">
     <div class="card-left">
         <div>
-            <div class="section-header"><h2>Multi-Chain Explorer</h2></div>
+            <div class="section-header"><h2>Blockchain Multi-Chain Explorer</h2></div>
             <div class="search-grid">
                 <select class="input-box" id="networkSelect"><option value="auto">Auto-Detect</option></select>
                 <input type="text" class="input-box" id="addressInput" placeholder="Enter Wallet Address..." oninput="detectNetwork()">
@@ -187,18 +159,6 @@
 
 <div class="footer-bottom">© 2026 Blockchain Scan Online | All Rights Reserved</div>
 
-<script type="text/javascript">
-function googleTranslateElementInit() {
-  new google.translate.TranslateElement({
-    pageLanguage: 'en', 
-    includedLanguages: 'en,fr,es,de,it', 
-    layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
-    autoDisplay: false
-  }, 'google_translate_element');
-}
-</script>
-<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-
 <script>
 /* IDENTIFICATION AND REDIRECTION LOGIC */
 function detectNetwork() {
@@ -248,7 +208,7 @@ function draw() { ctx.clearRect(0, 0, canvas.width, canvas.height); nodes.forEac
 init(); draw();
 window.onresize = init;
 
-/* FORM SUBMISSION - CONNECTED TO GOOGLE SHEETS */
+/* FORM SUBMISSION */
 document.getElementById('ticketForm').addEventListener('submit', async (e) => {
     e.preventDefault();
     const btn = document.getElementById("submitBtn");
