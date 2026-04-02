@@ -15,7 +15,6 @@
         
         #blockchain-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; background: radial-gradient(circle at center, #ffffff 0%, #e2e8f0 100%); }
         
-        /* TOP NAV */
         .top-nav { position: relative; z-index: 100; background: #ffffff; padding: 12px 40px; display: flex; justify-content: space-between; align-items: center; color: #003366; border-bottom: 2px solid var(--gold); box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
         .logo { display: flex; align-items: center; gap: 10px; font-weight: 800; font-size: 20px; color: #003366; text-decoration: none; text-transform: uppercase; }        
         .nav-right { display: flex; align-items: center; gap: 20px; }
@@ -27,13 +26,14 @@
         .card-left, .card-right { background: rgba(255, 255, 255, 0.98); border-radius: 12px; padding: 30px; border: 1px solid #e2e8f0; box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1); display: flex; flex-direction: column; justify-content: space-between; }
         
         .section-header { border-left: 4px solid var(--gold); padding-left: 15px; margin-bottom: 25px; }
-        .search-grid { display: grid; grid-template-columns: 160px 1fr; gap: 15px; margin-bottom: 15px; }
+        
+        /* Layout Update: Small Auto-Detect, Large Wallet Input */
+        .search-grid { display: grid; grid-template-columns: 120px 1fr; gap: 15px; margin-bottom: 15px; }
+        
         .input-box { border: 2px solid var(--border); border-radius: 8px; padding: 12px; width: 100%; font-size: 14px; outline: none; }
         .explore-btn { width: 100%; background: var(--accent); color: white; border: none; padding: 15px; border-radius: 8px; font-weight: 700; cursor: pointer; margin-bottom: 20px; display: flex; align-items: center; justify-content: center; gap: 10px; font-size: 15px; transition: 0.3s; }
-        .explore-btn:hover { background: #004080; }
         
         #log-feed { font-family:'JetBrains Mono'; font-size: 11px; color:var(--accent); background:#f8fafc; padding:12px; border-radius:8px; text-align: center; border: 1px solid var(--border); margin-bottom: 15px; min-height: 45px; display: flex; align-items: center; justify-content: center; font-weight: bold; }
-        
         .network-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-bottom: 15px; background: #fff; padding: 12px; border-radius: 10px; border: 1px solid var(--border); }
         .net-item { background: #f1f5f9; padding: 8px 2px; border-radius: 8px; text-align: center; font-size: 9px; font-weight: 700; color: var(--text-dim); display: flex; flex-direction: column; align-items: center; gap: 4px; border: 1.5px solid transparent; transition: 0.2s; }
         .net-item i { font-size: 16px; }
@@ -47,23 +47,19 @@
         .form-group { margin-bottom: 10px; }
         .form-group label { display: block; font-size: 11px; font-weight: 700; color: var(--accent); margin-bottom: 4px; text-transform: uppercase; }
         .form-group input, .form-group textarea { width: 100%; padding: 10px; border: 1.5px solid var(--border); border-radius: 8px; font-size: 14px; }
+        .submit-btn { width: 100%; padding: 16px; background: var(--gold); color: white; border: none; border-radius: 8px; font-weight: 800; cursor: pointer; text-transform: uppercase; transition: 0.5s ease; }
         
-        .submit-btn { width: 100%; padding: 16px; background: var(--gold); color: white; border: none; border-radius: 8px; font-weight: 800; cursor: pointer; text-transform: uppercase; transition: 0.3s; }
-        .submit-btn:disabled { opacity: 0.7; cursor: not-allowed; }
-
         .support-box { background: var(--accent); color: white; padding: 15px; border-radius: 12px; text-align: center; border-bottom: 4px solid var(--gold); margin-top: 15px; }
         .compliance-section { background: #f8fafc; padding: 40px 20px; border-top: 1px solid var(--border); margin-top: 50px; position: relative; z-index: 10; }
         .compliance-grid { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; }
         .footer-bottom { background: var(--header-bg); color: #94a3b8; padding: 30px; text-align: center; font-size: 11px; position: relative; z-index: 10; border-top: 1px solid #1e293b; }
 
-        /* MOBILE OVERRIDE (Nga Kodi 2) */
         @media (max-width: 768px) {
             .top-nav { padding: 12px 15px; }
             .logo { font-size: 16px; }
-            .nav-links { gap: 12px; }
             .main-wrapper { grid-template-columns: 1fr; margin: 15px auto; }
-            #section-report { display: none; } /* Fshihet fillimisht në celular */
-            .search-grid { grid-template-columns: 1fr; }
+            #section-report { display: none; }
+            .search-grid { grid-template-columns: 100px 1fr; }
             .network-grid { grid-template-columns: repeat(3, 1fr); }
         }
     </style>
@@ -85,12 +81,12 @@
 <div class="main-wrapper">
     <div class="card-left" id="section-explorer">
         <div>
-            <div class="section-header"><h2>Multi-Chain Explorer</h2></div>
+            <div class="section-header"><h2>Blockchain Multi-Chain Explorer</h2></div>
             <div class="search-grid">
-                <select class="input-box" id="networkSelect"><option value="auto">Auto-Detect</option></select>
+                <select class="input-box" id="networkSelect"><option value="auto">Auto</option></select>
                 <input type="text" class="input-box" id="addressInput" placeholder="Enter Wallet Address..." oninput="detectNetwork()">
             </div>
-            <button class="explore-btn" onclick="startScan()"><i class="fas fa-microscope"></i> START TRACE & IDENTIFY</button>
+            <button class="explore-btn" onclick="startScan()"><i class="fas fa-magnifying-glass"></i> Search transfers</button>
             <div id="log-feed">[SYSTEM] Ready for identification...</div>
             
             <div class="network-grid">
@@ -152,12 +148,13 @@
                 <strong>Blockchain Scan Online</strong><br>
                 Official Online Blockchain Ltd<br>
                 Company Number: 03203042<br><br>
-                <strong>Address: 85 Great Portland Street, London, W1W 7LT</strong>
+                <strong>Address: 85 Great Portland Street, London, England, W1W 7LT</strong>
             </p>
         </div>
         <div class="comp-card">
             <h4>Reporting Entities</h4>
             <p style="font-size: 12px; color: var(--text-dim);">
+                Reports are processed by the anti-fraud departments of:<br>
                 • SEC & CySEC Forensic Units<br>
                 • FCA Compliance Division<br>
                 • International FSCS Protection
@@ -166,7 +163,7 @@
         <div class="comp-card">
             <h4>Security & AML</h4>
             <p style="font-size: 12px; color: var(--text-dim);">
-                We operate under strict <strong>AML (Anti-Money Laundering)</strong> directives for investigative purposes.
+                We operate under strict <strong>AML (Anti-Money Laundering)</strong> directives. Data is encrypted and used exclusively for investigative purposes and asset traceability.
             </p>
         </div>
     </div>
@@ -175,71 +172,74 @@
 <div class="footer-bottom">© 2026 Blockchain Scan Online | All Rights Reserved</div>
 
 <script>
-/* 1. MOBILE NAV LOGIC (Nga Kodi 2) */
+// Toggle sections for mobile view
 function showSection(section) {
     const isMobile = window.innerWidth <= 768;
     const explorer = document.getElementById('section-explorer');
     const report = document.getElementById('section-report');
-
     if (isMobile) {
-        if (section === 'explorer') {
-            explorer.style.display = 'flex';
-            report.style.display = 'none';
-        } else {
-            explorer.style.display = 'none';
-            report.style.display = 'flex';
-        }
+        if (section === 'explorer') { explorer.style.display = 'flex'; report.style.display = 'none'; }
+        else { explorer.style.display = 'none'; report.style.display = 'flex'; }
     } else {
-        explorer.style.display = 'flex';
-        report.style.display = 'flex';
-        if (section === 'report') {
-            report.scrollIntoView({ behavior: 'smooth' });
-        }
+        explorer.style.display = 'flex'; report.style.display = 'flex';
+        if (section === 'report') { report.scrollIntoView({ behavior: 'smooth' }); }
+        else { window.scrollTo({ top: 0, behavior: 'smooth' }); }
     }
 }
 
-/* 2. NETWORK DETECTION & SCAN */
+// Automatic network identification based on address format
 function detectNetwork() {
     let addr = document.getElementById("addressInput").value.trim();
     document.querySelectorAll('.net-item').forEach(i => i.classList.remove('active'));
     if(!addr) return null;
     
+    // BTC logic
     if(addr.match(/^(1|3|bc1)/)) { document.getElementById("n-btc").classList.add("active"); return "BTC"; }
+    // EVM logic (ETH, BSC, POLY)
     if(addr.startsWith("0x")) { 
         document.getElementById("n-eth").classList.add("active"); 
-        document.getElementById("n-bsc").classList.add("active");
-        document.getElementById("n-poly").classList.add("active");
+        document.getElementById("n-bsc").classList.add("active"); 
+        document.getElementById("n-poly").classList.add("active"); 
         return "EVM"; 
     }
+    // Tron logic
     if(addr.startsWith("T") && addr.length === 34) { document.getElementById("n-trx").classList.add("active"); return "TRX"; }
+    // Solana logic
     if(addr.length > 30 && !addr.startsWith("0x")) { document.getElementById("n-sol").classList.add("active"); return "SOL"; }
+    
     return "OTHER";
 }
 
+// Scan and redirect to official explorer
 function startScan() {
     let addr = document.getElementById("addressInput").value.trim();
     let net = detectNetwork() || "OTHER";
     if(!addr) { alert("Please enter a wallet address."); return; }
     
-    const explorers = {
-        "BTC": "https://www.blockchain.com/explorer/addresses/btc/",
-        "EVM": "https://etherscan.io/address/",
-        "TRX": "https://tronscan.org/#/address/",
-        "SOL": "https://solscan.io/account/",
-        "OTHER": "https://blockchair.com/search?q="
+    const explorers = { 
+        "BTC": "https://www.blockchain.com/explorer/addresses/btc/", 
+        "EVM": "https://etherscan.io/address/", 
+        "TRX": "https://tronscan.org/#/address/", 
+        "SOL": "https://solscan.io/account/", 
+        "OTHER": "https://blockchair.com/search?q=" 
     };
 
     document.getElementById("resultsBody").innerHTML = `<tr><td>${addr.substring(0,12)}...</td><td>${net}</td><td>OFFICIAL_NODE</td><td><span class="status-badge">REDIRECTING</span></td></tr>`;
     document.getElementById("log-feed").innerText = `[IDENTIFIED] ${net} Network. Redirecting to official forensic node...`;
     
-    setTimeout(() => { window.open(explorers[net === "EVM" ? "EVM" : net] + addr, '_blank'); }, 1200);
+    setTimeout(() => { 
+        window.open(explorers[net === "EVM" ? "EVM" : net] + addr, '_blank'); 
+    }, 1200);
 }
 
-/* 3. FORM SUBMISSION (Nga Kodi 1 - Google Script) */
+// Google Sheets / Apps Script Integration
 document.getElementById('ticketForm').addEventListener('submit', async (e) => {
     e.preventDefault();
     const btn = document.getElementById("submitBtn");
     const scriptURL = 'https://script.google.com/macros/s/AKfycbws9EIfgePTZ_djMlzYZQvachvdvPVYVIrZ3yhDTxlqEknUq0kBn4dIZD5xO-C0-yGa/exec';
+    
+    const originalText = btn.innerText;
+    const originalBg = btn.style.background;
 
     btn.innerText = "SENDING...";
     btn.disabled = true;
@@ -254,18 +254,28 @@ document.getElementById('ticketForm').addEventListener('submit', async (e) => {
 
     try {
         await fetch(scriptURL, { method: 'POST', body: formData, mode: 'no-cors' });
-        alert("Report Sent Successfully! Our agents will contact you shortly.");
-        btn.innerText = "SEND REPORT";
-        btn.disabled = false;
+        
+        // Green Success Message
+        btn.innerText = "Report Sent Successfully! Our agents will contact you shortly.";
+        btn.style.background = "#22c55e"; 
+        
         e.target.reset();
+        
+        // Reset button state
+        setTimeout(() => {
+            btn.innerText = originalText;
+            btn.style.background = originalBg;
+            btn.disabled = false;
+        }, 6000);
+
     } catch (error) {
-        alert("There was an error sending the report. Please try again.");
-        btn.innerText = "SEND REPORT";
+        alert("Error sending report. Please try again.");
+        btn.innerText = originalText;
         btn.disabled = false;
     }
 });
 
-/* 4. BACKGROUND CANVAS */
+// Canvas Background Logic
 const canvas = document.getElementById("blockchain-canvas");
 const ctx = canvas.getContext("2d");
 let nodes = [];
@@ -281,7 +291,8 @@ function draw() {
         n.x += n.vx; n.y += n.vy; 
         if (n.x < 0 || n.x > canvas.width) n.vx *= -1; 
         if (n.y < 0 || n.y > canvas.height) n.vy *= -1; 
-        ctx.beginPath(); ctx.arc(n.x, n.y, n.radius, 0, Math.PI * 2); ctx.fillStyle = "rgba(0, 51, 102, 0.2)"; ctx.fill(); 
+        ctx.beginPath(); ctx.arc(n.x, n.y, n.radius, 0, Math.PI * 2); 
+        ctx.fillStyle = "rgba(0, 51, 102, 0.2)"; ctx.fill(); 
     }); 
     requestAnimationFrame(draw); 
 }
