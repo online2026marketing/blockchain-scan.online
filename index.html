@@ -298,6 +298,17 @@ function draw() {
 }
 init(); draw();
 window.onresize = init;
+
+// BREVO / EMAIL REDIRECT LOGIC
+window.addEventListener('load', function() {
+    if (window.location.hash === '#section-report') {
+        showSection('report');
+        setTimeout(() => {
+            const el = document.getElementById('section-report');
+            if(el) el.scrollIntoView({ behavior: 'smooth' });
+        }, 500);
+    }
+});
 </script>
 </body>
 </html>
