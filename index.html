@@ -309,6 +309,103 @@ window.addEventListener('load', function() {
         }, 500);
     }
 });
+    // --- AUTOMATIC TRANSLATION SYSTEM BASED ON COUNTRY ---
+
+const translations = {
+    "IT": {
+        "nav-explorer": '<i class="fas fa-magnifying-glass"></i> Esplora',
+        "nav-report": '<i class="fas fa-file-contract"></i> Segnala Truffa',
+        "title-explorer": "Esploratore Blockchain Multi-Chain",
+        "btn-search": '<i class="fas fa-magnifying-glass"></i> Cerca trasferimenti',
+        "placeholder-address": "Inserisci l'indirizzo del portafoglio...",
+        "log-ready": "[SISTEMA] Pronto per l'identificazione...",
+        "title-report": "Invia Ticket di Segnalazione",
+        "label-tax": "Codice Fiscale / Partita IVA",
+        "label-name": "Nome Completo",
+        "label-email": "Email Ufficiale",
+        "label-phone": "Numero di Telefono",
+        "label-amount": "Importo Perso ($/€)",
+        "label-details": "Dettagli Transazione",
+        "btn-submit": "INVIA SEGNALAZIONE",
+        "support-title": "Supporto 24/7"
+    },
+    "ES": {
+        "nav-explorer": '<i class="fas fa-magnifying-glass"></i> Explorador',
+        "nav-report": '<i class="fas fa-file-contract"></i> Reportar Estafa',
+        "title-explorer": "Explorador de Blockchain Multi-Cadena",
+        "btn-search": '<i class="fas fa-magnifying-glass"></i> Buscar transferencias',
+        "placeholder-address": "Ingrese la dirección de la billetera...",
+        "log-ready": "[SISTEMA] Listo para la identificación...",
+        "title-report": "Enviar Ticket de Informe",
+        "label-tax": "ID Fiscal / Código Fiscal",
+        "label-name": "Nombre Completo",
+        "label-email": "Correo Electrónico Oficial",
+        "label-phone": "Número de Teléfono",
+        "label-amount": "Cantidad Perdida ($/€)",
+        "label-details": "Detalles de la Transacción",
+        "btn-submit": "ENVIAR INFORME",
+        "support-title": "Soporte 24/7"
+    },
+    "EN": {
+        "nav-explorer": '<i class="fas fa-magnifying-glass"></i> Explorer',
+        "nav-report": '<i class="fas fa-file-contract"></i> Report Scam',
+        "title-explorer": "Blockchain Multi-Chain Explorer",
+        "btn-search": '<i class="fas fa-magnifying-glass"></i> Search transfers',
+        "placeholder-address": "Enter Wallet Address...",
+        "log-ready": "[SYSTEM] Ready for identification...",
+        "title-report": "Submit Report Ticket",
+        "label-tax": "Tax ID / Fiscal Code",
+        "label-name": "Full Name",
+        "label-email": "Official Email",
+        "label-phone": "Phone Number",
+        "label-amount": "Amount Lost ($/€)",
+        "label-details": "Transaction Details",
+        "btn-submit": "SEND REPORT",
+        "support-title": "Support 24/7"
+    }
+};
+
+async function autoTranslate() {
+    try {
+        // Fetch location data based on IP
+        const response = await fetch('https://ipapi.co/json/');
+        const data = await response.json();
+        const country = data.country_code; // e.g., "IT", "ES", "GB"
+
+        let lang = "EN"; // Default language
+        if (country === "IT") lang = "IT";
+        else if (country === "ES") lang = "ES";
+        // You can add more countries here (e.g., DE, FR)
+
+        const t = translations[lang];
+
+        // Apply translations to page elements
+        document.querySelector('.nav-links a:nth-child(1)').innerHTML = t["nav-explorer"];
+        document.querySelector('.nav-links a:nth-child(2)').innerHTML = t["nav-report"];
+        document.querySelector('.section-header h2').innerText = t["title-explorer"];
+        document.querySelector('.explore-btn').innerHTML = t["btn-search"];
+        document.getElementById('addressInput').placeholder = t["placeholder-address"];
+        document.getElementById('log-feed').innerText = t["log-ready"];
+        document.querySelector('#section-report h3').innerText = t["title-report"];
+        
+        const labels = document.querySelectorAll('#ticketForm label');
+        labels[0].innerText = t["label-tax"];
+        labels[1].innerText = t["label-name"];
+        labels[2].innerText = t["label-email"];
+        labels[3].innerText = t["label-phone"];
+        labels[4].innerText = t["label-amount"];
+        labels[5].innerText = t["label-details"];
+        
+        document.getElementById('submitBtn').innerText = t["btn-submit"];
+        document.querySelector('.support-box h4').innerText = t["support-title"];
+
+    } catch (error) {
+        console.log("Translation error or adblocker: keeping default English.");
+    }
+}
+
+// Trigger function on page load
+window.addEventListener('DOMContentLoaded', autoTranslate);
 </script>
 </body>
 </html>
