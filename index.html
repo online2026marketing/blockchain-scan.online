@@ -47,7 +47,6 @@
         .form-group input, .form-group textarea { width: 100%; padding: 10px; border: 1.5px solid var(--border); border-radius: 8px; font-size: 14px; }
         .submit-btn { width: 100%; padding: 16px; background: var(--gold); color: white; border: none; border-radius: 8px; font-weight: 800; cursor: pointer; text-transform: uppercase; transition: 0.5s ease; }
         
-        /* Stile per la verifica pratica */
         .status-card { background: #f8fafc; padding: 20px; border-radius: 12px; border: 1.5px dashed var(--gold); margin-bottom: 25px; }
         .status-message { margin-top: 10px; font-size: 14px; font-weight: 800; display: none; text-align: left; }
         .status-online { color: #166534; }
@@ -190,7 +189,8 @@
 <div class="footer-bottom">© 2026 Blockchain Scan Online | Tutti i diritti riservati</div>
 
 <script>
-const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbws9EIfgePTZ_djMlzYZQvachvdvPVYVIrZ3yhDTxlqEknUq0kBn4dIZD5xO-C0-yGa/exec';
+// URL AGGIORNATO E CORRETTO
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz9dY7NrEhP9H9PBeWhLpWW_kumaRtRe1ZjA4mPzw1daTLONrUl9P4TcInUKynohgT7/exec';
 
 // LOGICA VERIFICA PRATICA (GET)
 async function checkStatus() {
@@ -207,7 +207,11 @@ async function checkStatus() {
     btn.disabled = true;
 
     try {
-        const response = await fetch(`${SCRIPT_URL}?searchEmail=${encodeURIComponent(email)}`);
+        // Aggiunto redirect 'follow' per GitHub Pages
+        const response = await fetch(`${SCRIPT_URL}?searchEmail=${encodeURIComponent(email)}`, {
+            method: 'GET',
+            redirect: 'follow'
+        });
         const data = await response.json();
 
         msgDiv.style.display = "block";
@@ -222,6 +226,7 @@ async function checkStatus() {
         msgDiv.style.display = "block";
         msgDiv.className = "status-message status-offline";
         msgDiv.innerText = "ERRORE DI CONNESSIONE";
+        console.error('Fetch error:', error);
     } finally {
         btn.innerText = "VERIFICA PRATICA";
         btn.disabled = false;
@@ -250,7 +255,6 @@ document.getElementById('ticketForm').addEventListener('submit', async (e) => {
     formData.append("details", document.getElementById("t-dettagli").value);
 
     try {
-        // Invio a Google Sheets (Usiamo mode: 'no-cors' per evitare blocchi CORS sui redirect di Google)
         await fetch(SCRIPT_URL, { method: 'POST', body: formData, mode: 'no-cors' });
         
         btn.innerText = "Segnalazione Inviata! Verrai ricontattato.";
@@ -268,7 +272,6 @@ document.getElementById('ticketForm').addEventListener('submit', async (e) => {
     }
 });
 
-// Funzioni Navigazione e Rilevamento Rete
 function showSection(section) {
     const isMobile = window.innerWidth <= 768;
     const explorer = document.getElementById('section-explorer');
@@ -308,7 +311,6 @@ function startScan() {
     setTimeout(() => { window.open(explorers[net === "EVM" ? "EVM" : net] + addr, '_blank'); }, 1200);
 }
 
-// Background Animation
 const canvas = document.getElementById("blockchain-canvas");
 const ctx = canvas.getContext("2d");
 let nodes = [];
