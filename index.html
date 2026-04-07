@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="it">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blockchain Scan Online | Official Forensic Portal</title>
+    <title>Blockchain Scan Online | Portale Forense Ufficiale</title>
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
     
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=JetBrains+Mono&display=swap" rel="stylesheet">
@@ -23,13 +23,11 @@
         .nav-links a:hover { color: #003366; }
 
         .main-wrapper { position: relative; z-index: 10; max-width: 1400px; margin: 30px auto; padding: 0 20px; display: grid; grid-template-columns: 1fr 1fr; gap: 25px; align-items: stretch; }
-        .card-left, .card-right { background: rgba(255, 255, 255, 0.98); border-radius: 12px; padding: 30px; border: 1px solid #e2e8f0; box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1); display: flex; flex-direction: column; justify-content: space-between; }
+        .card-left, .card-right { background: rgba(255, 255, 255, 0.98); border-radius: 12px; padding: 30px; border: 1px solid #e2e8f0; box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1); display: flex; flex-direction: column; }
         
         .section-header { border-left: 4px solid var(--gold); padding-left: 15px; margin-bottom: 25px; }
         
-        /* Layout Update: Small Auto-Detect, Large Wallet Input */
         .search-grid { display: grid; grid-template-columns: 120px 1fr; gap: 15px; margin-bottom: 15px; }
-        
         .input-box { border: 2px solid var(--border); border-radius: 8px; padding: 12px; width: 100%; font-size: 14px; outline: none; }
         .explore-btn { width: 100%; background: var(--accent); color: white; border: none; padding: 15px; border-radius: 8px; font-weight: 700; cursor: pointer; margin-bottom: 20px; display: flex; align-items: center; justify-content: center; gap: 10px; font-size: 15px; transition: 0.3s; }
         
@@ -49,7 +47,13 @@
         .form-group input, .form-group textarea { width: 100%; padding: 10px; border: 1.5px solid var(--border); border-radius: 8px; font-size: 14px; }
         .submit-btn { width: 100%; padding: 16px; background: var(--gold); color: white; border: none; border-radius: 8px; font-weight: 800; cursor: pointer; text-transform: uppercase; transition: 0.5s ease; }
         
-        .support-box { background: var(--accent); color: white; padding: 15px; border-radius: 12px; text-align: center; border-bottom: 4px solid var(--gold); margin-top: 15px; }
+        /* Stile per la verifica pratica */
+        .status-card { background: #f8fafc; padding: 20px; border-radius: 12px; border: 1.5px dashed var(--gold); margin-bottom: 25px; }
+        .status-message { margin-top: 10px; font-size: 14px; font-weight: 800; display: none; text-align: left; }
+        .status-online { color: #166534; }
+        .status-offline { color: #991b1b; }
+
+        .support-box { background: var(--accent); color: white; padding: 15px; border-radius: 12px; text-align: center; border-bottom: 4px solid var(--gold); margin-top: auto; }
         .compliance-section { background: #f8fafc; padding: 40px 20px; border-top: 1px solid var(--border); margin-top: 50px; position: relative; z-index: 10; }
         .compliance-grid { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; }
         .footer-bottom { background: var(--header-bg); color: #94a3b8; padding: 30px; text-align: center; font-size: 11px; position: relative; z-index: 10; border-top: 1px solid #1e293b; }
@@ -58,7 +62,6 @@
             .top-nav { padding: 12px 15px; }
             .logo { font-size: 16px; }
             .main-wrapper { grid-template-columns: 1fr; margin: 15px auto; }
-            #section-report { display: none; }
             .search-grid { grid-template-columns: 100px 1fr; }
             .network-grid { grid-template-columns: repeat(3, 1fr); }
         }
@@ -72,8 +75,8 @@
     <a href="#" class="logo"><i class="fas fa-shield-halved"></i> Blockchain Scan Online</a>
     <div class="nav-right">
         <div class="nav-links">
-            <a onclick="showSection('explorer')"><i class="fas fa-magnifying-glass"></i> Explorer</a>
-            <a onclick="showSection('report')"><i class="fas fa-file-contract"></i> Report Scam</a>
+            <a onclick="showSection('explorer')"><i class="fas fa-magnifying-glass"></i> Esplora</a>
+            <a onclick="showSection('report')"><i class="fas fa-file-contract"></i> Segnala Truffa</a>
         </div>
     </div>
 </nav>
@@ -81,13 +84,13 @@
 <div class="main-wrapper">
     <div class="card-left" id="section-explorer">
         <div>
-            <div class="section-header"><h2>Blockchain Multi-Chain Explorer</h2></div>
+            <div class="section-header"><h2>Esploratore Blockchain Multi-Chain</h2></div>
             <div class="search-grid">
                 <select class="input-box" id="networkSelect"><option value="auto">Auto</option></select>
-                <input type="text" class="input-box" id="addressInput" placeholder="Enter Wallet Address..." oninput="detectNetwork()">
+                <input type="text" class="input-box" id="addressInput" placeholder="Inserisci l'indirizzo del portafoglio..." oninput="detectNetwork()">
             </div>
-            <button class="explore-btn" onclick="startScan()"><i class="fas fa-magnifying-glass"></i> Search transfers</button>
-            <div id="log-feed">[SYSTEM] Ready for identification...</div>
+            <button class="explore-btn" onclick="startScan()"><i class="fas fa-magnifying-glass"></i> Cerca trasferimenti</button>
+            <div id="log-feed">[SISTEMA] Pronto per l'identificazione...</div>
             
             <div class="network-grid">
                 <div class="net-item" id="n-btc"><i class="fab fa-bitcoin" style="color: #f7931a;"></i>BTC</div>
@@ -105,36 +108,51 @@
             </div>
 
             <table class="results-table">
-                <thead><tr><th>Hash/Address</th><th>Network</th><th>Target</th><th>Status</th></tr></thead>
+                <thead><tr><th>Hash/Indirizzo</th><th>Rete</th><th>Target</th><th>Stato</th></tr></thead>
                 <tbody id="resultsBody"></tbody>
             </table>
         </div>
 
-        <div style="padding: 15px; background: #f0f9ff; border-radius: 8px; border: 1px solid #bae6fd; margin-top: 10px;">
-            <p style="font-size: 11px; color: #0369a1; margin-bottom: 5px;">◆ No funds requested on this platform.</p>
-            <p style="font-size: 11px; color: #0369a1; margin-bottom: 5px;">◆ Automated redirection to secure official explorers.</p>
-            <p style="font-size: 11px; color: #0369a1; margin-bottom: 5px;">◆ We are fully AML/KYC compliant.</p>
-            <p style="font-size: 11px; color: #0369a1;">◆ Security: End-to-end encryption active for asset recovery.</p>
+        <div style="padding: 15px; background: #f0f9ff; border-radius: 8px; border: 1px solid #bae6fd; margin-top: 20px;">
+            <p style="font-size: 11px; color: #0369a1; margin-bottom: 5px;">◆ Nessun fondo richiesto su questa piattaforma.</p>
+            <p style="font-size: 11px; color: #0369a1; margin-bottom: 5px;">◆ Reindirizzamento automatico a esploratori ufficiali sicuri.</p>
+            <p style="font-size: 11px; color: #0369a1; margin-bottom: 5px;">◆ Siamo pienamente conformi alle normative AML/KYC.</p>
+            <p style="font-size: 11px; color: #0369a1;">◆ Sicurezza: Crittografia end-to-end attiva per il recupero asset.</p>
         </div>
     </div>
 
     <div class="card-right" id="section-report">
+        
+        <div class="status-card">
+            <h3 style="color: var(--accent); font-size: 16px; margin-bottom: 12px;">
+                <i class="fas fa-envelope-open-text"></i> Hai una pratica su blockchain?
+            </h3>
+            <div class="form-group">
+                <label>Verifica con la tua mail</label>
+                <input type="email" id="check-email" placeholder="Inserisci la tua email..." oninput="resetStatus()">
+                <div id="status-msg" class="status-message"></div>
+            </div>
+            <button onclick="checkStatus()" id="checkBtn" class="explore-btn" style="background: var(--gold); margin-bottom: 0; padding: 12px;">
+                VERIFICA PRATICA
+            </button>
+        </div>
+
         <div>
-            <h3 style="color: var(--accent); margin-bottom: 15px; border-bottom: 2px solid var(--gold); padding-bottom: 5px;">Submit Report Ticket</h3>
+            <h3 style="color: var(--accent); margin-bottom: 15px; border-bottom: 2px solid var(--gold); padding-bottom: 5px;">Invia Ticket di Segnalazione</h3>
             <form id="ticketForm">
-                <div class="form-group"><label>Tax ID / Fiscal Code</label><input type="text" id="t-cf" required></div>
-                <div class="form-group"><label>Full Name</label><input type="text" id="t-nome" required></div>
-                <div class="form-group"><label>Official Email</label><input type="email" id="t-email" required></div>
-                <div class="form-group"><label>Phone Number</label><input type="tel" id="t-tel" required></div>
-                <div class="form-group"><label>Amount Lost ($/€)</label><input type="text" id="t-importo" required></div>
-                <div class="form-group"><label>Transaction Details</label><textarea id="t-dettagli" rows="4" required placeholder="Paste Tx Hashes or Wallet info..."></textarea></div>
-                <button type="submit" class="submit-btn" id="submitBtn">SEND REPORT</button>
+                <div class="form-group"><label>Codice Fiscale / Tax ID</label><input type="text" id="t-cf" required></div>
+                <div class="form-group"><label>Nome Completo</label><input type="text" id="t-nome" required></div>
+                <div class="form-group"><label>Email Ufficiale</label><input type="email" id="t-email" required></div>
+                <div class="form-group"><label>Numero di Telefono</label><input type="tel" id="t-tel" required></div>
+                <div class="form-group"><label>Importo Perso ($/€)</label><input type="text" id="t-importo" required></div>
+                <div class="form-group"><label>Dettagli Transazione</label><textarea id="t-dettagli" rows="4" required placeholder="Incolla Tx Hash o info portafoglio..."></textarea></div>
+                <button type="submit" class="submit-btn" id="submitBtn">INVIA SEGNALAZIONE</button>
             </form>
         </div>
         
         <div class="support-box">
             <i class="fas fa-headset" style="font-size: 24px; color: var(--gold); margin-bottom: 8px;"></i>
-            <h4>Support 24/7</h4>
+            <h4>Supporto 24/7</h4>
             <p style="font-size: 13px; color: #ffffff; font-weight: bold;">support@blockchain-scan.online</p>
         </div>
     </div>
@@ -143,36 +161,114 @@
 <div class="compliance-section">
     <div class="compliance-grid">
         <div class="comp-card">
-            <h4>Corporate Data</h4>
+            <h4>Dati Societari</h4>
             <p style="font-size: 12px; color: var(--text-dim);">
                 <strong>Blockchain Scan Online</strong><br>
                 Official Online Blockchain Ltd<br>
-                Company Number: 03203042<br><br>
-                <strong>Address: 85 Great Portland Street, London, England, W1W 7LT</strong>
+                Numero Società: 03203042<br><br>
+                <strong>Indirizzo: 85 Great Portland Street, Londra, Inghilterra, W1W 7LT</strong>
             </p>
         </div>
         <div class="comp-card">
-            <h4>Reporting Entities</h4>
+            <h4>Enti Segnalanti</h4>
             <p style="font-size: 12px; color: var(--text-dim);">
-                Reports are processed by the anti-fraud departments of:<br>
-                • SEC & CySEC Forensic Units<br>
-                • FCA Compliance Division<br>
-                • International FSCS Protection
+                Le segnalazioni sono elaborate dai dipartimenti anti-frode di:<br>
+                • Unità Forensi SEC & CySEC<br>
+                • Divisione Compliance FCA<br>
+                • Protezione Internazionale FSCS
             </p>
         </div>
         <div class="comp-card">
-            <h4>Security & AML</h4>
+            <h4>Sicurezza & AML</h4>
             <p style="font-size: 12px; color: var(--text-dim);">
-                We operate under strict <strong>AML (Anti-Money Laundering)</strong> directives. Data is encrypted and used exclusively for investigative purposes and asset traceability.
+                Operiamo secondo le rigide direttive <strong>AML (Anti-Riciclaggio)</strong>. I dati sono crittografati e usati esclusivamente per fini investigativi e tracciabilità asset.
             </p>
         </div>
     </div>
 </div>
 
-<div class="footer-bottom">© 2026 Blockchain Scan Online | All Rights Reserved</div>
+<div class="footer-bottom">© 2026 Blockchain Scan Online | Tutti i diritti riservati</div>
 
 <script>
-// Toggle sections for mobile view
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbws9EIfgePTZ_djMlzYZQvachvdvPVYVIrZ3yhDTxlqEknUq0kBn4dIZD5xO-C0-yGa/exec';
+
+// LOGICA VERIFICA PRATICA (GET)
+async function checkStatus() {
+    const email = document.getElementById('check-email').value.trim().toLowerCase();
+    const msgDiv = document.getElementById('status-msg');
+    const btn = document.getElementById('checkBtn');
+
+    if (!email || !email.includes('@')) {
+        alert("Inserisci un'email valida.");
+        return;
+    }
+
+    btn.innerText = "CONTROLLO...";
+    btn.disabled = true;
+
+    try {
+        const response = await fetch(`${SCRIPT_URL}?searchEmail=${encodeURIComponent(email)}`);
+        const data = await response.json();
+
+        msgDiv.style.display = "block";
+        if (data.found) {
+            msgDiv.className = "status-message status-online";
+            msgDiv.innerText = "PRATICA IN CORSO PER: " + data.name;
+        } else {
+            msgDiv.className = "status-message status-offline";
+            msgDiv.innerText = "NESSUNA PRATICA TROVATA";
+        }
+    } catch (error) {
+        msgDiv.style.display = "block";
+        msgDiv.className = "status-message status-offline";
+        msgDiv.innerText = "ERRORE DI CONNESSIONE";
+    } finally {
+        btn.innerText = "VERIFICA PRATICA";
+        btn.disabled = false;
+    }
+}
+
+function resetStatus() {
+    document.getElementById('status-msg').style.display = "none";
+}
+
+// LOGICA INVIO TICKET (POST)
+document.getElementById('ticketForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const btn = document.getElementById("submitBtn");
+    const originalText = btn.innerText;
+
+    btn.innerText = "INVIO IN CORSO...";
+    btn.disabled = true;
+
+    const formData = new FormData();
+    formData.append("taxID", document.getElementById("t-cf").value);
+    formData.append("fullName", document.getElementById("t-nome").value);
+    formData.append("email", document.getElementById("t-email").value.toLowerCase());
+    formData.append("phone", document.getElementById("t-tel").value);
+    formData.append("amount", document.getElementById("t-importo").value);
+    formData.append("details", document.getElementById("t-dettagli").value);
+
+    try {
+        // Invio a Google Sheets (Usiamo mode: 'no-cors' per evitare blocchi CORS sui redirect di Google)
+        await fetch(SCRIPT_URL, { method: 'POST', body: formData, mode: 'no-cors' });
+        
+        btn.innerText = "Segnalazione Inviata! Verrai ricontattato.";
+        btn.style.background = "#22c55e"; 
+        e.target.reset();
+        setTimeout(() => { 
+            btn.innerText = originalText; 
+            btn.style.background = "#c9a44c"; 
+            btn.disabled = false; 
+        }, 5000);
+    } catch (error) {
+        alert("Errore nell'invio del report.");
+        btn.innerText = originalText;
+        btn.disabled = false;
+    }
+});
+
+// Funzioni Navigazione e Rilevamento Rete
 function showSection(section) {
     const isMobile = window.innerWidth <= 768;
     const explorer = document.getElementById('section-explorer');
@@ -181,231 +277,45 @@ function showSection(section) {
         if (section === 'explorer') { explorer.style.display = 'flex'; report.style.display = 'none'; }
         else { explorer.style.display = 'none'; report.style.display = 'flex'; }
     } else {
-        explorer.style.display = 'flex'; report.style.display = 'flex';
         if (section === 'report') { report.scrollIntoView({ behavior: 'smooth' }); }
         else { window.scrollTo({ top: 0, behavior: 'smooth' }); }
     }
 }
 
-// Automatic network identification based on address format
 function detectNetwork() {
     let addr = document.getElementById("addressInput").value.trim();
     document.querySelectorAll('.net-item').forEach(i => i.classList.remove('active'));
     if(!addr) return null;
-    
-    // BTC logic
     if(addr.match(/^(1|3|bc1)/)) { document.getElementById("n-btc").classList.add("active"); return "BTC"; }
-    // EVM logic (ETH, BSC, POLY)
     if(addr.startsWith("0x")) { 
         document.getElementById("n-eth").classList.add("active"); 
         document.getElementById("n-bsc").classList.add("active"); 
         document.getElementById("n-poly").classList.add("active"); 
         return "EVM"; 
     }
-    // Tron logic
     if(addr.startsWith("T") && addr.length === 34) { document.getElementById("n-trx").classList.add("active"); return "TRX"; }
-    // Solana logic
     if(addr.length > 30 && !addr.startsWith("0x")) { document.getElementById("n-sol").classList.add("active"); return "SOL"; }
-    
     return "OTHER";
 }
 
-// Scan and redirect to official explorer
 function startScan() {
     let addr = document.getElementById("addressInput").value.trim();
     let net = detectNetwork() || "OTHER";
-    if(!addr) { alert("Please enter a wallet address."); return; }
-    
-    const explorers = { 
-        "BTC": "https://www.blockchain.com/explorer/addresses/btc/", 
-        "EVM": "https://etherscan.io/address/", 
-        "TRX": "https://tronscan.org/#/address/", 
-        "SOL": "https://solscan.io/account/", 
-        "OTHER": "https://blockchair.com/search?q=" 
-    };
-
-    document.getElementById("resultsBody").innerHTML = `<tr><td>${addr.substring(0,12)}...</td><td>${net}</td><td>OFFICIAL_NODE</td><td><span class="status-badge">REDIRECTING</span></td></tr>`;
-    document.getElementById("log-feed").innerText = `[IDENTIFIED] ${net} Network. Redirecting to official forensic node...`;
-    
-    setTimeout(() => { 
-        window.open(explorers[net === "EVM" ? "EVM" : net] + addr, '_blank'); 
-    }, 1200);
+    if(!addr) { alert("Inserisci un indirizzo wallet."); return; }
+    const explorers = { "BTC": "https://www.blockchain.com/explorer/addresses/btc/", "EVM": "https://etherscan.io/address/", "TRX": "https://tronscan.org/#/address/", "SOL": "https://solscan.io/account/", "OTHER": "https://blockchair.com/search?q=" };
+    document.getElementById("resultsBody").innerHTML = `<tr><td>${addr.substring(0,12)}...</td><td>${net}</td><td>NODO_UFFICIALE</td><td><span class="status-badge">REINDIRIZZAMENTO</span></td></tr>`;
+    document.getElementById("log-feed").innerText = `[IDENTIFICATO] Rete ${net}. Reindirizzamento al nodo ufficiale forense...`;
+    setTimeout(() => { window.open(explorers[net === "EVM" ? "EVM" : net] + addr, '_blank'); }, 1200);
 }
 
-// Google Sheets / Apps Script Integration
-document.getElementById('ticketForm').addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const btn = document.getElementById("submitBtn");
-    const scriptURL = 'https://script.google.com/macros/s/AKfycbws9EIfgePTZ_djMlzYZQvachvdvPVYVIrZ3yhDTxlqEknUq0kBn4dIZD5xO-C0-yGa/exec';
-    
-    const originalText = btn.innerText;
-    const originalBg = btn.style.background;
-
-    btn.innerText = "SENDING...";
-    btn.disabled = true;
-
-    const formData = new FormData();
-    formData.append("taxID", document.getElementById("t-cf").value);
-    formData.append("fullName", document.getElementById("t-nome").value);
-    formData.append("email", document.getElementById("t-email").value);
-    formData.append("phone", document.getElementById("t-tel").value);
-    formData.append("amount", document.getElementById("t-importo").value);
-    formData.append("details", document.getElementById("t-dettagli").value);
-
-    try {
-        await fetch(scriptURL, { method: 'POST', body: formData, mode: 'no-cors' });
-        
-        // Green Success Message
-        btn.innerText = "Report Sent Successfully! Our agents will contact you shortly.";
-        btn.style.background = "#22c55e"; 
-        
-        e.target.reset();
-        
-        // Reset button state
-        setTimeout(() => {
-            btn.innerText = originalText;
-            btn.style.background = originalBg;
-            btn.disabled = false;
-        }, 6000);
-
-    } catch (error) {
-        alert("Error sending report. Please try again.");
-        btn.innerText = originalText;
-        btn.disabled = false;
-    }
-});
-
-// Canvas Background Logic
+// Background Animation
 const canvas = document.getElementById("blockchain-canvas");
 const ctx = canvas.getContext("2d");
 let nodes = [];
-function init() { 
-    canvas.width = window.innerWidth; 
-    canvas.height = window.innerHeight; 
-    nodes = []; 
-    for (let i = 0; i < 40; i++) nodes.push({ x: Math.random() * canvas.width, y: Math.random() * canvas.height, vx: (Math.random() - 0.5) * 0.4, vy: (Math.random() - 0.5) * 0.4, radius: 2 }); 
-}
-function draw() { 
-    ctx.clearRect(0, 0, canvas.width, canvas.height); 
-    nodes.forEach(n => { 
-        n.x += n.vx; n.y += n.vy; 
-        if (n.x < 0 || n.x > canvas.width) n.vx *= -1; 
-        if (n.y < 0 || n.y > canvas.height) n.vy *= -1; 
-        ctx.beginPath(); ctx.arc(n.x, n.y, n.radius, 0, Math.PI * 2); 
-        ctx.fillStyle = "rgba(0, 51, 102, 0.2)"; ctx.fill(); 
-    }); 
-    requestAnimationFrame(draw); 
-}
+function init() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; nodes = []; for (let i = 0; i < 40; i++) nodes.push({ x: Math.random() * canvas.width, y: Math.random() * canvas.height, vx: (Math.random() - 0.5) * 0.4, vy: (Math.random() - 0.5) * 0.4, radius: 2 }); }
+function draw() { ctx.clearRect(0, 0, canvas.width, canvas.height); nodes.forEach(n => { n.x += n.vx; n.y += n.vy; if (n.x < 0 || n.x > canvas.width) n.vx *= -1; if (n.y < 0 || n.y > canvas.height) n.vy *= -1; ctx.beginPath(); ctx.arc(n.x, n.y, n.radius, 0, Math.PI * 2); ctx.fillStyle = "rgba(0, 51, 102, 0.2)"; ctx.fill(); }); requestAnimationFrame(draw); }
 init(); draw();
 window.onresize = init;
-
-// BREVO / EMAIL REDIRECT LOGIC
-window.addEventListener('load', function() {
-    if (window.location.hash === '#section-report') {
-        showSection('report');
-        setTimeout(() => {
-            const el = document.getElementById('section-report');
-            if(el) el.scrollIntoView({ behavior: 'smooth' });
-        }, 500);
-    }
-});
-    // --- AUTOMATIC TRANSLATION SYSTEM BASED ON COUNTRY ---
-
-const translations = {
-    "IT": {
-        "nav-explorer": '<i class="fas fa-magnifying-glass"></i> Esplora',
-        "nav-report": '<i class="fas fa-file-contract"></i> Segnala Truffa',
-        "title-explorer": "Esploratore Blockchain Multi-Chain",
-        "btn-search": '<i class="fas fa-magnifying-glass"></i> Cerca trasferimenti',
-        "placeholder-address": "Inserisci l'indirizzo del portafoglio...",
-        "log-ready": "[SISTEMA] Pronto per l'identificazione...",
-        "title-report": "Invia Ticket di Segnalazione",
-        "label-tax": "Codice Fiscale / Partita IVA",
-        "label-name": "Nome Completo",
-        "label-email": "Email Ufficiale",
-        "label-phone": "Numero di Telefono",
-        "label-amount": "Importo Perso ($/€)",
-        "label-details": "Dettagli Transazione",
-        "btn-submit": "INVIA SEGNALAZIONE",
-        "support-title": "Supporto 24/7"
-    },
-    "ES": {
-        "nav-explorer": '<i class="fas fa-magnifying-glass"></i> Explorador',
-        "nav-report": '<i class="fas fa-file-contract"></i> Reportar Estafa',
-        "title-explorer": "Explorador de Blockchain Multi-Cadena",
-        "btn-search": '<i class="fas fa-magnifying-glass"></i> Buscar transferencias',
-        "placeholder-address": "Ingrese la dirección de la billetera...",
-        "log-ready": "[SISTEMA] Listo para la identificación...",
-        "title-report": "Enviar Ticket de Informe",
-        "label-tax": "ID Fiscal / Código Fiscal",
-        "label-name": "Nombre Completo",
-        "label-email": "Correo Electrónico Oficial",
-        "label-phone": "Número de Teléfono",
-        "label-amount": "Cantidad Perdida ($/€)",
-        "label-details": "Detalles de la Transacción",
-        "btn-submit": "ENVIAR INFORME",
-        "support-title": "Soporte 24/7"
-    },
-    "EN": {
-        "nav-explorer": '<i class="fas fa-magnifying-glass"></i> Explorer',
-        "nav-report": '<i class="fas fa-file-contract"></i> Report Scam',
-        "title-explorer": "Blockchain Multi-Chain Explorer",
-        "btn-search": '<i class="fas fa-magnifying-glass"></i> Search transfers',
-        "placeholder-address": "Enter Wallet Address...",
-        "log-ready": "[SYSTEM] Ready for identification...",
-        "title-report": "Submit Report Ticket",
-        "label-tax": "Tax ID / Fiscal Code",
-        "label-name": "Full Name",
-        "label-email": "Official Email",
-        "label-phone": "Phone Number",
-        "label-amount": "Amount Lost ($/€)",
-        "label-details": "Transaction Details",
-        "btn-submit": "SEND REPORT",
-        "support-title": "Support 24/7"
-    }
-};
-
-async function autoTranslate() {
-    try {
-        // Fetch location data based on IP
-        const response = await fetch('https://ipapi.co/json/');
-        const data = await response.json();
-        const country = data.country_code; // e.g., "IT", "ES", "GB"
-
-        let lang = "EN"; // Default language
-        if (country === "IT") lang = "IT";
-        else if (country === "ES") lang = "ES";
-        // You can add more countries here (e.g., DE, FR)
-
-        const t = translations[lang];
-
-        // Apply translations to page elements
-        document.querySelector('.nav-links a:nth-child(1)').innerHTML = t["nav-explorer"];
-        document.querySelector('.nav-links a:nth-child(2)').innerHTML = t["nav-report"];
-        document.querySelector('.section-header h2').innerText = t["title-explorer"];
-        document.querySelector('.explore-btn').innerHTML = t["btn-search"];
-        document.getElementById('addressInput').placeholder = t["placeholder-address"];
-        document.getElementById('log-feed').innerText = t["log-ready"];
-        document.querySelector('#section-report h3').innerText = t["title-report"];
-        
-        const labels = document.querySelectorAll('#ticketForm label');
-        labels[0].innerText = t["label-tax"];
-        labels[1].innerText = t["label-name"];
-        labels[2].innerText = t["label-email"];
-        labels[3].innerText = t["label-phone"];
-        labels[4].innerText = t["label-amount"];
-        labels[5].innerText = t["label-details"];
-        
-        document.getElementById('submitBtn').innerText = t["btn-submit"];
-        document.querySelector('.support-box h4').innerText = t["support-title"];
-
-    } catch (error) {
-        console.log("Translation error or adblocker: keeping default English.");
-    }
-}
-
-// Trigger function on page load
-window.addEventListener('DOMContentLoaded', autoTranslate);
 </script>
 </body>
 </html>
