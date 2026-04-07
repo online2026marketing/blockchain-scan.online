@@ -189,10 +189,10 @@
 <div class="footer-bottom">© 2026 Blockchain Scan Online | Tutti i diritti riservati</div>
 
 <script>
-// URL AGGIORNATO E CORRETTO
+// --- URL DELLO SCRIPT (COPIA L'ULTIMO URL DA GOOGLE) ---
 const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz9dY7NrEhP9H9PBeWhLpWW_kumaRtRe1ZjA4mPzw1daTLONrUl9P4TcInUKynohgT7/exec';
 
-// LOGICA VERIFICA PRATICA (GET)
+// --- LOGICA VERIFICA PRATICA (GET) ---
 async function checkStatus() {
     const email = document.getElementById('check-email').value.trim().toLowerCase();
     const msgDiv = document.getElementById('status-msg');
@@ -205,13 +205,14 @@ async function checkStatus() {
 
     btn.innerText = "CONTROLLO...";
     btn.disabled = true;
+    msgDiv.style.display = "none";
 
     try {
-        // Aggiunto redirect 'follow' per GitHub Pages
-        const response = await fetch(`${SCRIPT_URL}?searchEmail=${encodeURIComponent(email)}`, {
-            method: 'GET',
-            redirect: 'follow'
-        });
+        // Fondamentale: usiamo fetch con parametri in query string
+        const response = await fetch(`${SCRIPT_URL}?searchEmail=${encodeURIComponent(email)}`);
+        
+        if (!response.ok) throw new Error("Errore server");
+        
         const data = await response.json();
 
         msgDiv.style.display = "block";
@@ -225,7 +226,7 @@ async function checkStatus() {
     } catch (error) {
         msgDiv.style.display = "block";
         msgDiv.className = "status-message status-offline";
-        msgDiv.innerText = "ERRORE DI CONNESSIONE";
+        msgDiv.innerText = "ERRORE DI CONNESSIONE AL DATABASE";
         console.error('Fetch error:', error);
     } finally {
         btn.innerText = "VERIFICA PRATICA";
@@ -237,7 +238,7 @@ function resetStatus() {
     document.getElementById('status-msg').style.display = "none";
 }
 
-// LOGICA INVIO TICKET (POST)
+// --- LOGICA INVIO TICKET (POST) ---
 document.getElementById('ticketForm').addEventListener('submit', async (e) => {
     e.preventDefault();
     const btn = document.getElementById("submitBtn");
@@ -246,16 +247,22 @@ document.getElementById('ticketForm').addEventListener('submit', async (e) => {
     btn.innerText = "INVIO IN CORSO...";
     btn.disabled = true;
 
-    const formData = new FormData();
-    formData.append("taxID", document.getElementById("t-cf").value);
-    formData.append("fullName", document.getElementById("t-nome").value);
-    formData.append("email", document.getElementById("t-email").value.toLowerCase());
-    formData.append("phone", document.getElementById("t-tel").value);
-    formData.append("amount", document.getElementById("t-importo").value);
-    formData.append("details", document.getElementById("t-dettagli").value);
+    // Usiamo URLSearchParams per assicurarci che Google riceva correttamente i parametri
+    const params = new URLSearchParams();
+    params.append("taxID", document.getElementById("t-cf").value);
+    params.append("fullName", document.getElementById("t-nome").value);
+    params.append("email", document.getElementById("t-email").value.toLowerCase());
+    params.append("phone", document.getElementById("t-tel").value);
+    params.append("amount", document.getElementById("t-importo").value);
+    params.append("details", document.getElementById("t-dettagli").value);
 
     try {
-        await fetch(SCRIPT_URL, { method: 'POST', body: formData, mode: 'no-cors' });
+        // POST senza no-cors per ricevere feedback (se configurato bene su GAS)
+        await fetch(SCRIPT_URL, { 
+            method: 'POST', 
+            body: params,
+            mode: 'no-cors' // Google richiede spesso no-cors per le POST da domini esterni
+        });
         
         btn.innerText = "Segnalazione Inviata! Verrai ricontattato.";
         btn.style.background = "#22c55e"; 
@@ -273,10 +280,9 @@ document.getElementById('ticketForm').addEventListener('submit', async (e) => {
 });
 
 function showSection(section) {
-    const isMobile = window.innerWidth <= 768;
     const explorer = document.getElementById('section-explorer');
     const report = document.getElementById('section-report');
-    if (isMobile) {
+    if (window.innerWidth <= 768) {
         if (section === 'explorer') { explorer.style.display = 'flex'; report.style.display = 'none'; }
         else { explorer.style.display = 'none'; report.style.display = 'flex'; }
     } else {
