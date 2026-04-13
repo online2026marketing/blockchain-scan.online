@@ -145,6 +145,14 @@
                 <div class="form-group"><label>Numero di Telefono</label><input type="tel" id="t-tel" required></div>
                 <div class="form-group"><label>Importo Perso ($/€)</label><input type="text" id="t-importo" required></div>
                 <div class="form-group"><label>Dettagli Transazione</label><textarea id="t-dettagli" rows="4" required placeholder="Incolla Tx Hash o info portafoglio..."></textarea></div>
+                
+                <div class="form-group" style="display: flex; align-items: flex-start; gap: 12px; margin: 20px 0; background: #fdfaf3; padding: 10px; border-radius: 8px; border: 1px solid #eee;">
+                    <input type="checkbox" id="t-consenso" required style="width: 22px; height: 22px; cursor: pointer; accent-color: #c9a44c; flex-shrink: 0;">
+                    <label for="t-consenso" style="text-transform: none; font-weight: 400; line-height: 1.4; cursor: pointer; font-size: 12px; color: var(--text-main);">
+                        Accetto i <strong>Termini e Condizioni</strong> e acconsento al trattamento dei dati per l'invio di comunicazioni informative e pubblicitarie.
+                    </label>
+                </div>
+
                 <button type="submit" class="submit-btn" id="submitBtn">INVIA SEGNALAZIONE</button>
             </form>
         </div>
@@ -189,10 +197,8 @@
 <div class="footer-bottom">© 2026 Blockchain Scan Online | Tutti i diritti riservati</div>
 
 <script>
-// --- URL DELLO SCRIPT (COPIA L'ULTIMO URL DA GOOGLE) ---
 const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz9dY7NrEhP9H9PBeWhLpWW_kumaRtRe1ZjA4mPzw1daTLONrUl9P4TcInUKynohgT7/exec';
 
-// --- LOGICA VERIFICA PRATICA (GET) ---
 async function checkStatus() {
     const email = document.getElementById('check-email').value.trim().toLowerCase();
     const msgDiv = document.getElementById('status-msg');
@@ -208,11 +214,8 @@ async function checkStatus() {
     msgDiv.style.display = "none";
 
     try {
-        // Fondamentale: usiamo fetch con parametri in query string
         const response = await fetch(`${SCRIPT_URL}?searchEmail=${encodeURIComponent(email)}`);
-        
         if (!response.ok) throw new Error("Errore server");
-        
         const data = await response.json();
 
         msgDiv.style.display = "block";
@@ -227,7 +230,6 @@ async function checkStatus() {
         msgDiv.style.display = "block";
         msgDiv.className = "status-message status-offline";
         msgDiv.innerText = "ERRORE DI CONNESSIONE AL DATABASE";
-        console.error('Fetch error:', error);
     } finally {
         btn.innerText = "VERIFICA PRATICA";
         btn.disabled = false;
@@ -238,7 +240,6 @@ function resetStatus() {
     document.getElementById('status-msg').style.display = "none";
 }
 
-// --- LOGICA INVIO TICKET (POST) ---
 document.getElementById('ticketForm').addEventListener('submit', async (e) => {
     e.preventDefault();
     const btn = document.getElementById("submitBtn");
@@ -247,7 +248,6 @@ document.getElementById('ticketForm').addEventListener('submit', async (e) => {
     btn.innerText = "INVIO IN CORSO...";
     btn.disabled = true;
 
-    // Usiamo URLSearchParams per assicurarci che Google riceva correttamente i parametri
     const params = new URLSearchParams();
     params.append("taxID", document.getElementById("t-cf").value);
     params.append("fullName", document.getElementById("t-nome").value);
@@ -257,11 +257,10 @@ document.getElementById('ticketForm').addEventListener('submit', async (e) => {
     params.append("details", document.getElementById("t-dettagli").value);
 
     try {
-        // POST senza no-cors per ricevere feedback (se configurato bene su GAS)
         await fetch(SCRIPT_URL, { 
             method: 'POST', 
             body: params,
-            mode: 'no-cors' // Google richiede spesso no-cors per le POST da domini esterni
+            mode: 'no-cors' 
         });
         
         btn.innerText = "Segnalazione Inviata! Verrai ricontattato.";
